@@ -25,6 +25,8 @@ class AchievementSystem
         }
     }
 
+
+
     public function get(): array
     {
         return $this->session->get('achievements');
