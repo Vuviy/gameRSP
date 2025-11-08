@@ -24,9 +24,6 @@ class AchievementSystem
             $_SESSION['achievements'][] = '5 wins in a row';
         }
     }
-
-
-
     public function get(): array
     {
         return $this->session->get('achievements');
