@@ -25,9 +25,9 @@ class Game
         $result = $this->determineWinner($playerChoice, $computerChoice);
 
         $this->session->updateStats($result);
-        $this->session->updateGames($result);
+        $this->session->updateGames($result, $playerChoice, $computerChoice);
 
-        $this->achievements->check($this->session->get('stats'));
+        $this->achievements->check();
 
 
         $this->session->set('last_game', [

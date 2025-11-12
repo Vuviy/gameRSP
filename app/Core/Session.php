@@ -61,7 +61,7 @@ class Session
         $_SESSION['stats'] = $stats;
     }
 
-    public function updateGames(string $result): void
+    public function updateGames(string $result, string $playerChoice, string $computerChoice): void
     {
         $games = $_SESSION['games'];
 
@@ -71,6 +71,8 @@ class Session
         $games[] = [
             'time' => $time,
             'result' => $result,
+            'playerChoice' => $playerChoice,
+            'computerChoice' => $computerChoice,
         ];
 
         $_SESSION['games'] = $games;

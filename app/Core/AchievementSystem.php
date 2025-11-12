@@ -2,10 +2,14 @@
 
 namespace App\Core;
 
+use App\Base\CheckerRegistry;
+use App\Base\Container;
+use App\Core\Achievement\FiveWinsStreakChecker;
+use App\Core\Achivment\TenWinsChecker;
+
 class AchievementSystem
 {
     private Session $session;
-
     public function __construct(Session $session)
     {
         $this->session = $session;
@@ -14,16 +18,20 @@ class AchievementSystem
         }
     }
 
-    public function check(array $stats): void
+    public function check(): void
     {
-        if ($stats['wins'] >= 10 && !in_array('10 wins total', $_SESSION['achievements'])) {
-            $_SESSION['achievements'][] = '10 wins total';
-        }
 
-        if ($stats['max_streak'] >= 5 && !in_array('5 wins in a row', $_SESSION['achievements'])) {
-            $_SESSION['achievements'][] = '5 wins in a row';
-        }
+        $container = Container::getInstance();
+
+        $registry =  $container->get(CheckerRegistry::class);
+        $games = $this->session->get('games');
+
+        $achievementsList = achievement_config();
+
+        $chain = $registry->buildChain($achievementsList);
+        $chain->handle($games);
     }
+
     public function get(): array
     {
         return $this->session->get('achievements');
